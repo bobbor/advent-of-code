@@ -1,7 +1,14 @@
 const { readFile } = require('node:fs/promises');
 const { join } = require('node:path');
 
-module.exports.read = async (dir, { removeEmptyLines, test } = { removeEmptyLines: true }) => {
+const defaults = {
+  removeEmptyLines: true,
+  test: false
+}
+module.exports.read = async (dir, opts = {}) => {
+  const options = Object.assign(defaults, opts);
+  const { removeEmptyLines, test} = options;
+  
   let fn = 'input.txt';
   if(test) {
     fn = `test${test}.txt`
